@@ -11,6 +11,7 @@ import UIKit
 class ActionSheetHeaderView: UIView {
 
     private let title: String
+    private let message: String
     private let appearance: ActionSheetAppearance
     
     private lazy var contentView: UIView = {
@@ -21,12 +22,22 @@ class ActionSheetHeaderView: UIView {
 
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
-        titleLabel.textColor = appearance.headerTextColor
-        titleLabel.font = UIFont.systemFont(ofSize: 13)
+        titleLabel.textColor = appearance.headerTitleColor
+        titleLabel.font = UIFont.systemFont(ofSize: 14)
         titleLabel.text = title
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
         return titleLabel
+    }()
+    
+    private lazy var messageLabel: UILabel = {
+        let messageLabel = UILabel()
+        messageLabel.textColor = appearance.headerMessageColor
+        messageLabel.font = UIFont.systemFont(ofSize: 12)
+        messageLabel.text = message
+        messageLabel.textAlignment = .center
+        messageLabel.numberOfLines = 0
+        return messageLabel
     }()
     
     private lazy var separatorView: UIView = {
@@ -35,8 +46,9 @@ class ActionSheetHeaderView: UIView {
         return separatorView
     }()
 
-    init(title: String, appearance: ActionSheetAppearance) {
+    init(title: String, message: String, appearance: ActionSheetAppearance) {
         self.title = title
+        self.message = message
         self.appearance = appearance
         super.init(frame: CGRect.zero)
         setupLayout()
@@ -47,8 +59,6 @@ class ActionSheetHeaderView: UIView {
     }
     
     private func setupLayout() {
-        heightAnchor.constraint(equalToConstant: 60).isActive = true
-        
         addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.topAnchor.constraint(equalTo: topAnchor).isActive = true
@@ -62,12 +72,28 @@ class ActionSheetHeaderView: UIView {
         separatorView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         separatorView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+        
+        if message.isEmpty {
+            heightAnchor.constraint(equalToConstant: 60).isActive = true
+            
+            contentView.addSubview(titleLabel)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
+            titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:-16).isActive = true
+        } else {
+            contentView.addSubview(titleLabel)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
+            titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:-16).isActive = true
 
-        contentView.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
-        titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:-16).isActive = true
+            contentView.addSubview(messageLabel)
+            messageLabel.translatesAutoresizingMaskIntoConstraints = false
+            messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12).isActive = true
+            messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20).isActive = true
+            messageLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
+            messageLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:-16).isActive = true
+        }
     }
 }

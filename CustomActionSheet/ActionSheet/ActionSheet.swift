@@ -18,17 +18,13 @@ class ActionSheet: UIViewController {
     
     //setup header
     var headerText = ""
+    var headerMessage = ""
     var headerColor = UIColor.white
     var headerTextColor = UIColor.black
     
     
     var willDismissBlock: (() -> Void)?
     var didDismissBlock: (() -> Void)?
-
-//    init(type: ActionSheetType) {
-//        self.type = type
-//        super.init(nibName: nil, bundle: nil)
-//    }
     
     func show(from viewController: UIViewController) {
         modalPresentationStyle = .overFullScreen
@@ -54,11 +50,13 @@ class ActionSheet: UIViewController {
     private var appearance: ActionSheetAppearance {
         let appearance = ActionSheetAppearance()
         appearance.backgroundColor = backgroundColor
-        appearance.headerColor = headerColor
         appearance.selectionColor = selectionColor
-        appearance.headerTextColor = headerTextColor
         appearance.textColor = textColor
         appearance.separatorColor = separatorColor
+        
+        appearance.headerColor = headerColor
+        appearance.headerTitleColor = headerTextColor
+        appearance.headerMessageColor = headerTextColor
         return appearance
     }
     
@@ -98,6 +96,13 @@ class ActionSheet: UIViewController {
         return contentView
     }()
     
+    private var hasHomeIndicator: Bool {
+        guard #available(iOS 11.0, *), let bottomPadding = UIApplication.shared.keyWindow?.safeAreaInsets.bottom, bottomPadding > 0 else {
+            return false
+        }
+        return true
+    }
+    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -123,7 +128,7 @@ class ActionSheet: UIViewController {
     
     private func setupUI() {
         if !headerText.isEmpty {
-            let headerView = ActionSheetHeaderView(title: headerText, appearance: appearance)
+            let headerView = ActionSheetHeaderView(title: headerText, message: headerMessage, appearance: appearance)
             stackView.insertArrangedSubview(headerView, at: 0)
         }
     }
@@ -179,9 +184,14 @@ class ActionSheet: UIViewController {
         contentView.addSubview(cancelButtonView)
         cancelButtonView.translatesAutoresizingMaskIntoConstraints = false
         cancelButtonView.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 6).isActive = true
-        cancelButtonView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
         cancelButtonView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         cancelButtonView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        
+        if hasHomeIndicator {
+            cancelButtonView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        } else {
+            cancelButtonView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
+        }
     }
 }
 
@@ -191,3 +201,4 @@ extension ActionSheet: UIGestureRecognizerDelegate {
         return touch.view == gestureRecognizer.view
     }
 }
+

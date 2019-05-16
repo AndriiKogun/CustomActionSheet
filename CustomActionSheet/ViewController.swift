@@ -24,6 +24,7 @@ class ViewController: UIViewController {
         actionSheet.headerColor = UIColor(red: 16/256, green: 32/256, blue: 50/256, alpha: 0.8)
         actionSheet.headerTextColor = UIColor.lightGray
         actionSheet.headerText = "Twitter.com"
+        actionSheet.headerMessage = "Header message"
         
         actionSheet.addButonWith(icon: UIImage(named: "1")!, title: "Open in...") {
             self.actionLabel.text = "Open in..."
