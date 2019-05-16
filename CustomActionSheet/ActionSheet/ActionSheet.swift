@@ -32,7 +32,7 @@ class ActionSheet: UIViewController {
     
     func show(from viewController: UIViewController) {
         modalPresentationStyle = .overFullScreen
-        viewController.present(self, animated: true, completion: nil)
+        viewController.present(self, animated: false, completion: nil)
     }
     
     func addButonWith(title: String, tappedBlock: @escaping () -> Void) {
