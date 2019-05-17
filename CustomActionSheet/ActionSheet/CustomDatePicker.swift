@@ -77,7 +77,7 @@ class CustomDatePicker: UIView {
         
         selectedMounthRow = startDateComponents.month! - 1
         selectedDayRow = startDateComponents.day! - 1
-        let selectedYearRow = startDateComponents.year! - 1
+        selectedYearRow = startDateComponents.year! - 1
         
         selectedDay = months[selectedMounthRow].days[selectedDayRow]
         
