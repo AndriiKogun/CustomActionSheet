@@ -65,7 +65,7 @@ class CustomDatePicker: UIView {
         var startDateComponents = calendar.dateComponents(in: TimeZone.current, from: selectedDate)
         let currentYear = startDateComponents.year!
         
-        for number in 0...currentYear + 1000 {
+        for number in 1...currentYear + 1000 {
             years.append(Year(number: number))
         }
         
@@ -77,7 +77,7 @@ class CustomDatePicker: UIView {
         
         selectedMounthRow = startDateComponents.month! - 1
         selectedDayRow = startDateComponents.day! - 1
-        let selectedYearRow = startDateComponents.year!
+        let selectedYearRow = startDateComponents.year! - 1
         
         selectedDay = months[selectedMounthRow].days[selectedDayRow]
         
