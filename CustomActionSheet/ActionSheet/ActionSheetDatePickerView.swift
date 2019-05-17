@@ -24,12 +24,9 @@ class ActionSheetDatePickerView: UIView {
         return separatorView
     }()
     
-    private lazy var datePicker: UIDatePicker = {
-        let datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.backgroundColor = appearance.backgroundColor
-        datePicker.setValue(appearance.datePickerTextColor, forKey: "textColor")
-        datePicker.addTarget(self, action: #selector(datePickerAction(_:)), for: .valueChanged)
+    private lazy var datePicker: CustomDatePicker = {
+        let datePicker = CustomDatePicker(appearance: appearance)
+        datePicker.delegate = self
         return datePicker
     }()
     
@@ -68,8 +65,11 @@ class ActionSheetDatePickerView: UIView {
         datePicker.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         datePicker.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
-    
-    @objc private func datePickerAction(_ sender: UIDatePicker) {
-        completionBlock(sender.date)
+}
+
+//MARK: - CustomDatePickerDelegate
+extension ActionSheetDatePickerView: CustomDatePickerDelegate {
+    func dateDidSelected(date: Date) {
+        completionBlock(date)
     }
 }

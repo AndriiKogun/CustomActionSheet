@@ -17,6 +17,7 @@
 		B57ADEBF2289F9A30095E115 /* CustomActionSheetUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57ADEBE2289F9A30095E115 /* CustomActionSheetUITests.swift */; };
 		B57ADECD228A058C0095E115 /* ActionSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57ADECC228A058C0095E115 /* ActionSheet.swift */; };
 		B5AE33D3228B7441009F365A /* ActionSheetAppearance.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5AE33D2228B7441009F365A /* ActionSheetAppearance.swift */; };
+		B5D730DC228F0AF80033133E /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5D730DB228F0AF80033133E /* CustomDatePicker.swift */; };
 		B5F347D7228C916100554685 /* ActionSheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F347D6228C916100554685 /* ActionSheetButton.swift */; };
 		B5F347DA228CB77000554685 /* ActionSheetCancelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F347D9228CB77000554685 /* ActionSheetCancelButton.swift */; };
 		B5F347DE228CBFE900554685 /* ActionSheetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F347DD228CBFE900554685 /* ActionSheetHeaderView.swift */; };
@@ -56,6 +57,7 @@
 		B57ADEC02289F9A30095E115 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B57ADECC228A058C0095E115 /* ActionSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheet.swift; sourceTree = "<group>"; };
 		B5AE33D2228B7441009F365A /* ActionSheetAppearance.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetAppearance.swift; sourceTree = "<group>"; };
+		B5D730DB228F0AF80033133E /* CustomDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomDatePicker.swift; sourceTree = "<group>"; };
 		B5F347D6228C916100554685 /* ActionSheetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetButton.swift; sourceTree = "<group>"; };
 		B5F347D9228CB77000554685 /* ActionSheetCancelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCancelButton.swift; sourceTree = "<group>"; };
 		B5F347DD228CBFE900554685 /* ActionSheetHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetHeaderView.swift; sourceTree = "<group>"; };
@@ -147,6 +149,7 @@
 				B5F347D9228CB77000554685 /* ActionSheetCancelButton.swift */,
 				B5F347DD228CBFE900554685 /* ActionSheetHeaderView.swift */,
 				B515F458228E2A7E008469D0 /* ActionSheetDatePickerView.swift */,
+				B5D730DB228F0AF80033133E /* CustomDatePicker.swift */,
 			);
 			path = ActionSheet;
 			sourceTree = "<group>";
@@ -290,6 +293,7 @@
 				B5F347D7228C916100554685 /* ActionSheetButton.swift in Sources */,
 				B515F459228E2A7E008469D0 /* ActionSheetDatePickerView.swift in Sources */,
 				B57ADECD228A058C0095E115 /* ActionSheet.swift in Sources */,
+				B5D730DC228F0AF80033133E /* CustomDatePicker.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
