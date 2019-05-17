@@ -33,8 +33,8 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akJ-Vj-uyd">
-                                <rect key="frame" x="176.5" y="252" width="61" height="36"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="30"/>
+                                <rect key="frame" x="182.5" y="259" width="49" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -44,23 +44,48 @@
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Selected Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cX-ya-KSi">
+                                <rect key="frame" x="121.5" y="128" width="171" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Final Selected Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3df-Jt-mUO">
+                                <rect key="frame" x="133" y="228" width="148" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5wO-Gc-2IJ">
+                                <rect key="frame" x="182.5" y="159" width="49" height="29"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="5wO-Gc-2IJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3wd-sM-7VT"/>
                             <constraint firstItem="akJ-Vj-uyd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4Yc-za-xGY"/>
+                            <constraint firstItem="3df-Jt-mUO" firstAttribute="top" secondItem="5wO-Gc-2IJ" secondAttribute="bottom" constant="40" id="EwW-EZ-ML3"/>
                             <constraint firstItem="QlY-6N-my8" firstAttribute="top" secondItem="Jev-sO-NOX" secondAttribute="bottom" constant="107" id="MQe-bu-rVf"/>
+                            <constraint firstItem="3df-Jt-mUO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PEI-CZ-Xbr"/>
+                            <constraint firstItem="akJ-Vj-uyd" firstAttribute="top" secondItem="3df-Jt-mUO" secondAttribute="bottom" constant="10" id="Pde-KO-IBT"/>
                             <constraint firstItem="NGa-8c-RJM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SJG-5d-gcZ"/>
+                            <constraint firstItem="5wO-Gc-2IJ" firstAttribute="top" secondItem="2cX-ya-KSi" secondAttribute="bottom" constant="10" id="UxA-Nz-A5U"/>
                             <constraint firstItem="QlY-6N-my8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VxU-ii-JIW"/>
                             <constraint firstItem="Jev-sO-NOX" firstAttribute="top" secondItem="akJ-Vj-uyd" secondAttribute="bottom" constant="8" id="bLH-mH-UHd"/>
                             <constraint firstItem="Jev-sO-NOX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bgs-sC-di9"/>
                             <constraint firstItem="QlY-6N-my8" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tOf-bL-ehN"/>
+                            <constraint firstItem="2cX-ya-KSi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xgI-uo-Kxa"/>
                             <constraint firstItem="QlY-6N-my8" firstAttribute="top" secondItem="NGa-8c-RJM" secondAttribute="bottom" constant="8" id="xz5-hd-DQ0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="actionLabel" destination="NGa-8c-RJM" id="wD5-K3-Rt6"/>
-                        <outlet property="dateLabel" destination="akJ-Vj-uyd" id="5kp-a8-2Mw"/>
+                        <outlet property="finalDateLabel" destination="akJ-Vj-uyd" id="aYV-L6-Sm3"/>
+                        <outlet property="selectingDateLabel" destination="5wO-Gc-2IJ" id="fIY-OE-qkC"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

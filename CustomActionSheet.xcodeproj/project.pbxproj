@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B515F459228E2A7E008469D0 /* ActionSheetDatePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B515F458228E2A7E008469D0 /* ActionSheetDatePickerView.swift */; };
 		B57ADE9F2289F9A00095E115 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57ADE9E2289F9A00095E115 /* AppDelegate.swift */; };
 		B57ADEA12289F9A00095E115 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B57ADEA02289F9A00095E115 /* ViewController.swift */; };
 		B57ADEA42289F9A00095E115 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B57ADEA22289F9A00095E115 /* Main.storyboard */; };
@@ -19,7 +20,6 @@
 		B5F347D7228C916100554685 /* ActionSheetButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F347D6228C916100554685 /* ActionSheetButton.swift */; };
 		B5F347DA228CB77000554685 /* ActionSheetCancelButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F347D9228CB77000554685 /* ActionSheetCancelButton.swift */; };
 		B5F347DE228CBFE900554685 /* ActionSheetHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F347DD228CBFE900554685 /* ActionSheetHeaderView.swift */; };
-		B5F347E0228CD4FE00554685 /* ActionSheetDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5F347DF228CD4FE00554685 /* ActionSheetDatePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B515F458228E2A7E008469D0 /* ActionSheetDatePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetDatePickerView.swift; sourceTree = "<group>"; };
 		B57ADE9B2289F9A00095E115 /* CustomActionSheet.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CustomActionSheet.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B57ADE9E2289F9A00095E115 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B57ADEA02289F9A00095E115 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -58,7 +59,6 @@
 		B5F347D6228C916100554685 /* ActionSheetButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetButton.swift; sourceTree = "<group>"; };
 		B5F347D9228CB77000554685 /* ActionSheetCancelButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetCancelButton.swift; sourceTree = "<group>"; };
 		B5F347DD228CBFE900554685 /* ActionSheetHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetHeaderView.swift; sourceTree = "<group>"; };
-		B5F347DF228CD4FE00554685 /* ActionSheetDatePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActionSheetDatePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -146,7 +146,7 @@
 				B5F347D6228C916100554685 /* ActionSheetButton.swift */,
 				B5F347D9228CB77000554685 /* ActionSheetCancelButton.swift */,
 				B5F347DD228CBFE900554685 /* ActionSheetHeaderView.swift */,
-				B5F347DF228CD4FE00554685 /* ActionSheetDatePicker.swift */,
+				B515F458228E2A7E008469D0 /* ActionSheetDatePickerView.swift */,
 			);
 			path = ActionSheet;
 			sourceTree = "<group>";
@@ -283,12 +283,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B57ADEA12289F9A00095E115 /* ViewController.swift in Sources */,
-				B5F347E0228CD4FE00554685 /* ActionSheetDatePicker.swift in Sources */,
 				B5F347DE228CBFE900554685 /* ActionSheetHeaderView.swift in Sources */,
 				B5F347DA228CB77000554685 /* ActionSheetCancelButton.swift in Sources */,
 				B57ADE9F2289F9A00095E115 /* AppDelegate.swift in Sources */,
 				B5AE33D3228B7441009F365A /* ActionSheetAppearance.swift in Sources */,
 				B5F347D7228C916100554685 /* ActionSheetButton.swift in Sources */,
+				B515F459228E2A7E008469D0 /* ActionSheetDatePickerView.swift in Sources */,
 				B57ADECD228A058C0095E115 /* ActionSheet.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

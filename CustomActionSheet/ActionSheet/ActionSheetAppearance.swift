@@ -10,6 +10,8 @@ import UIKit
 
 class ActionSheetAppearance: NSObject {
 
+    var datePickerTextColor = UIColor.white
+
     var backgroundColor = UIColor.white
     var separatorColor = UIColor.gray
     var selectionColor = UIColor.lightGray

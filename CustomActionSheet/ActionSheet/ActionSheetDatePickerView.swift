@@ -1,28 +1,21 @@
 //
-//  ActionSheetDatePicker.swift
+//  ActionSheetDatePickerView.swift
 //  CustomActionSheet
 //
-//  Created by A K on 5/16/19.
+//  Created by A K on 5/17/19.
 //  Copyright © 2019 A K. All rights reserved.
 //
 
 import UIKit
 
-class ActionSheetDatePicker: UIView {
-/*
-//    private var completionBlock: ((_ date: Date) -> Void)?
-//    private let appearance: ActionSheetAppearance
+class ActionSheetDatePickerView: UIView {
+
+    private let completionBlock: (_ date: Date) -> Void
+    private let appearance: ActionSheetAppearance
     
     private var contentView: UIView = {
         let contentView = UIView()
         return contentView
-    }()
-    
-    private lazy var datePicker: UIDatePicker = {
-        var datePicker = UIDatePicker()
-        datePicker.datePickerMode = .date
-        datePicker.backgroundColor = appearance.backgroundColor
-        return datePicker
     }()
     
     private lazy var separatorView: UIView = {
@@ -31,17 +24,20 @@ class ActionSheetDatePicker: UIView {
         return separatorView
     }()
     
-    init(appearance: ActionSheetAppearance) {
-        self.appearance = appearance
-        super.init(frame: CGRect.zero)
-        setupLayout()
-    }
-
+    private lazy var datePicker: UIDatePicker = {
+        let datePicker = UIDatePicker()
+        datePicker.datePickerMode = .date
+        datePicker.backgroundColor = appearance.backgroundColor
+        datePicker.setValue(appearance.datePickerTextColor, forKey: "textColor")
+        datePicker.addTarget(self, action: #selector(datePickerAction(_:)), for: .valueChanged)
+        return datePicker
+    }()
     
-    init() {
+    init(appearance: ActionSheetAppearance, completionBlock: @escaping (_ date: Date) -> Void) {
+        self.appearance = appearance
+        self.completionBlock = completionBlock
         super.init(frame: CGRect.zero)
         setupLayout()
-        contentView.backgroundColor = appearance.backgroundColor
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -49,7 +45,7 @@ class ActionSheetDatePicker: UIView {
     }
     
     private func setupLayout() {
-        heightAnchor.constraint(equalToConstant: 60).isActive = true
+        heightAnchor.constraint(equalToConstant: 180).isActive = true
         
         addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
@@ -72,5 +68,8 @@ class ActionSheetDatePicker: UIView {
         datePicker.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         datePicker.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
     }
- */
+    
+    @objc private func datePickerAction(_ sender: UIDatePicker) {
+        completionBlock(sender.date)
+    }
 }

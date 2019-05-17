@@ -10,25 +10,28 @@ import UIKit
 
 class ActionSheet: UIViewController {
     
-    //setup buttons
-    var backgroundColor = UIColor.white
-    var separatorColor = UIColor.gray
-    var selectionColor = UIColor.lightGray
-    var textColor = UIColor.black
+    var appearance: ActionSheetAppearance
     
-    //setup header
-    var headerText = ""
-    var headerMessage = ""
-    var headerColor = UIColor.white
-    var headerTextColor = UIColor.black
-    
-    
-    var willDismissBlock: (() -> Void)?
-    var didDismissBlock: (() -> Void)?
-    
+    var date = Date()
+
     func show(from viewController: UIViewController) {
         modalPresentationStyle = .overFullScreen
         viewController.present(self, animated: false, completion: nil)
+    }
+    
+    func addHeaderWith(title: String, message: String) {
+        let header = ActionSheetHeaderView(title: title, message: message, appearance: appearance)
+        stackView.addArrangedSubview(header)
+    }
+    
+    func addDatePicker(didChangeBlock completionBlock: ((_ date: Date) -> Void)?) {
+        let datePicker = ActionSheetDatePickerView(appearance: appearance) { (date) in
+            self.date = date
+            if let completionBlock = completionBlock {
+                completionBlock(date)
+            }
+        }
+        stackView.addArrangedSubview(datePicker)
     }
     
     func addButonWith(title: String, tappedBlock: @escaping () -> Void) {
@@ -47,19 +50,10 @@ class ActionSheet: UIViewController {
         stackView.addArrangedSubview(button)
     }
     
-    private var appearance: ActionSheetAppearance {
-        let appearance = ActionSheetAppearance()
-        appearance.backgroundColor = backgroundColor
-        appearance.selectionColor = selectionColor
-        appearance.textColor = textColor
-        appearance.separatorColor = separatorColor
-        
-        appearance.headerColor = headerColor
-        appearance.headerTitleColor = headerTextColor
-        appearance.headerMessageColor = headerTextColor
-        return appearance
-    }
-    
+    var willDismissBlock: (() -> Void)?
+    var didDismissBlock: (() -> Void)?
+
+    //MARK: - Private
     private var bottomAnchor: NSLayoutConstraint!
 
     private var containerView: UIView = {
@@ -69,7 +63,7 @@ class ActionSheet: UIViewController {
         return containerView
     }()
     
-    private let stackView: UIStackView = {
+    let stackView: UIStackView = {
         let stackView = UIStackView()
         stackView.contentMode = .scaleAspectFit
         stackView.backgroundColor = UIColor.clear
@@ -104,6 +98,7 @@ class ActionSheet: UIViewController {
     }
     
     init() {
+        self.appearance = ActionSheetAppearance()
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -114,7 +109,6 @@ class ActionSheet: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupLayour()
-        setupUI()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -124,13 +118,6 @@ class ActionSheet: UIViewController {
         let tap = UITapGestureRecognizer(target: self, action: #selector(hide))
         tap.delegate = self
         contentView.addGestureRecognizer(tap)
-    }
-    
-    private func setupUI() {
-        if !headerText.isEmpty {
-            let headerView = ActionSheetHeaderView(title: headerText, message: headerMessage, appearance: appearance)
-            stackView.insertArrangedSubview(headerView, at: 0)
-        }
     }
     
     private func show() {
