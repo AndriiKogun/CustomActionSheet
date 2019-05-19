@@ -66,6 +66,10 @@ class ActionSheetButton: ActionSheetItem {
         fatalError("init(coder:) has not been implemented")
     }
     
+    func hideSeparator() {
+        separatorView.backgroundColor = appearance.backgroundColor
+    }
+    
     private func setupLayout() {
         heightAnchor.constraint(equalToConstant: 60).isActive = true
 
@@ -86,9 +90,10 @@ class ActionSheetButton: ActionSheetItem {
         contentView.addSubview(iconImageView)
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        iconImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+        iconImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
         iconImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32).isActive = true
-        iconImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: NSLayoutConstraint.Axis.horizontal);
-
+        
         contentView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true

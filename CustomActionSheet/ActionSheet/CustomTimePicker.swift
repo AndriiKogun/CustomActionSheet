@@ -13,6 +13,11 @@ protocol CustomTimePickerDelegate: class {
 }
 
 class CustomTimePicker: UIView {
+    
+    enum Format {
+        case H12
+        case H24
+    }
 
     weak var delegate: CustomTimePickerDelegate?
     
@@ -23,17 +28,8 @@ class CustomTimePicker: UIView {
         return pickerView
     }()
     
-    private var isEnglish: Bool {
-        guard let code = Locale.preferredLanguages.first?.components(separatedBy: "-").first else { return false }
-        
-        if code == "en" {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     private let appearance: ActionSheetAppearance
+    private let timeFormat: Format
 
     private var selectedHourRow: Int = 0
     private var selectedMinuteRow: Int = 0
@@ -46,7 +42,8 @@ class CustomTimePicker: UIView {
     private var selectedDate: Date!
 
     //MARK: - Init
-    init(selectedDate: Date, appearance: ActionSheetAppearance) {
+    init(timeFormat: Format, selectedDate: Date, appearance: ActionSheetAppearance) {
+        self.timeFormat = timeFormat
         self.appearance = appearance
         super.init(frame: CGRect.zero)
         self.selectedDate = selectedDate
@@ -72,7 +69,7 @@ class CustomTimePicker: UIView {
         calendar.timeZone = TimeZone.current
         var dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: selectedDate)
         
-        if isEnglish {
+        if timeFormat == .H12 {
             for number in 1...12 {
                 hours.append(Hour(number: number))
             }
@@ -89,7 +86,7 @@ class CustomTimePicker: UIView {
             minutes.append(Minute(number: number))
         }
         
-        if isEnglish {
+        if timeFormat == .H12 {
             if dateComponents.hour == 0, 0...59 ~= dateComponents.minute! {
                 selectedHourRow = dateComponents.hour! + 11
                 selectedTimeFormatRow = 0
@@ -106,7 +103,7 @@ class CustomTimePicker: UIView {
 
         selectedMinuteRow = dateComponents.minute!
         
-        if isEnglish {
+        if timeFormat == .H12 {
             pickerView.selectRow(selectedTimeFormatRow, inComponent: 2, animated: false)
         }
         
@@ -118,7 +115,7 @@ class CustomTimePicker: UIView {
 //MARK: - UIPickerViewDelegate, UIPickerViewDataSource
 extension CustomTimePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        if isEnglish {
+        if timeFormat == .H12 {
             return 3
         }
         return 2
@@ -163,7 +160,7 @@ extension CustomTimePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
         var dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: selectedDate)
         dateComponents.minute = selectedMinuteRow
         
-        if isEnglish {
+        if timeFormat == .H12 {
             if selectedTimeFormatRow == 0, selectedHourRow + 1 == 12, 0...59 ~= selectedMinuteRow {
                 dateComponents.hour = selectedHourRow - 11
             } else if selectedTimeFormatRow == 1, 1...11 ~= selectedHourRow + 1 {
@@ -181,25 +178,32 @@ extension CustomTimePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
         delegate?.dateDidSelected(date: date)
     }
     
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let label = view as? UILabel ?? UILabel()
+        
+        pickerView.subviews[1].backgroundColor = appearance.separatorColor
+        pickerView.subviews[2].backgroundColor = appearance.separatorColor
+        
         let paragraph = NSMutableParagraphStyle()
         paragraph.alignment = .center
-        
+
         var title: String!
-        let myAttribute = [NSAttributedString.Key.foregroundColor: appearance.datePickerTextColor, NSAttributedString.Key.paragraphStyle: paragraph]
-        
+        let myAttribute = [NSAttributedString.Key.foregroundColor: appearance.datePickerTextColor,
+                           NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22),
+                           NSAttributedString.Key.paragraphStyle: paragraph]
+
         if component == 0 {
             title = hours[row].name
         } else if component == 1 {
             title = minutes[row].name
-        } else if component == 2 {
-            title = times[row].name
         } else {
-            return nil
+            title = times[row].name
         }
-        return NSAttributedString(string: title, attributes: myAttribute)
+
+        label.attributedText = NSAttributedString(string: title, attributes: myAttribute)
+        return label
     }
-    
+
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         return 60
     }

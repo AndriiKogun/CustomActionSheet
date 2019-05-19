@@ -11,7 +11,9 @@ import UIKit
 class ActionSheetDatePickerView: ActionSheetItem {
 
     private let completionBlock: (_ date: Date) -> Void
-    private let type: ActionSheetType
+    private var dateFormat: CustomDatePicker.Format?
+    private var timeFormat: CustomTimePicker.Format?
+
     private let selectedDate: Date
     
     private var contentView: UIView = {
@@ -26,22 +28,31 @@ class ActionSheetDatePickerView: ActionSheetItem {
     }()
     
     private lazy var datePicker: CustomDatePicker = {
-        let datePicker = CustomDatePicker(selectedDate: selectedDate, appearance: appearance)
+        let datePicker = CustomDatePicker(dateFormat: dateFormat!, selectedDate: selectedDate, appearance: appearance)
         datePicker.delegate = self
         return datePicker
     }()
     
     private lazy var timePicker: CustomTimePicker = {
-        let timePicker = CustomTimePicker(selectedDate: selectedDate, appearance: appearance)
+        let timePicker = CustomTimePicker(timeFormat: timeFormat!, selectedDate: selectedDate, appearance: appearance)
         timePicker.delegate = self
         return timePicker
     }()
     
-    init(type: ActionSheetType, selectedDate: Date, completionBlock: @escaping (_ date: Date) -> Void) {
-        self.type = type
+    private init(selectedDate: Date, completionBlock: @escaping (_ date: Date) -> Void) {
         self.selectedDate = selectedDate
         self.completionBlock = completionBlock
         super.init(frame: CGRect.zero)
+    }
+    
+    convenience init(dateFormat: CustomDatePicker.Format, selectedDate: Date, completionBlock: @escaping (_ date: Date) -> Void) {
+        self.init(selectedDate: selectedDate, completionBlock: completionBlock)
+        self.dateFormat = dateFormat
+    }
+    
+    convenience init(timeFormat: CustomTimePicker.Format, selectedDate: Date, completionBlock: @escaping (_ date: Date) -> Void) {
+        self.init(selectedDate: selectedDate, completionBlock: completionBlock)
+        self.timeFormat = timeFormat
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -72,14 +83,14 @@ class ActionSheetDatePickerView: ActionSheetItem {
         separatorView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         
-        if type == .date {
+        if dateFormat != nil {
             contentView.addSubview(datePicker)
             datePicker.translatesAutoresizingMaskIntoConstraints = false
             datePicker.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
             datePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
             datePicker.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
             datePicker.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        } else if type == .time {
+        } else {
             contentView.addSubview(timePicker)
             timePicker.translatesAutoresizingMaskIntoConstraints = false
             timePicker.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true

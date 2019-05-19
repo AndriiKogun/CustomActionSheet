@@ -14,6 +14,11 @@ protocol CustomDatePickerDelegate: class {
 
 class CustomDatePicker: UIView {
     
+    enum Format {
+        case monthFirst
+        case dayFirst
+    }
+    
     weak var delegate: CustomDatePickerDelegate?
     
     private lazy var pickerView: UIPickerView = {
@@ -23,17 +28,8 @@ class CustomDatePicker: UIView {
         return pickerView
     }()
     
-    private var isEnglish: Bool {
-        guard let code = Locale.preferredLanguages.first?.components(separatedBy: "-").first else { return false }
-        
-        if code == "en" {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     private let appearance: ActionSheetAppearance
+    private let dateFormat: Format
 
     private var selectedMounthRow: Int = 0
     private var selectedDayRow: Int = 0
@@ -45,7 +41,8 @@ class CustomDatePicker: UIView {
     private var selectedDate: Date!
     
     //MARK: - Init
-    init(selectedDate: Date, appearance: ActionSheetAppearance) {
+    init(dateFormat: Format, selectedDate: Date, appearance: ActionSheetAppearance) {
+        self.dateFormat = dateFormat
         self.appearance = appearance
         super.init(frame: CGRect.zero)
         self.selectedDate = selectedDate
@@ -56,7 +53,7 @@ class CustomDatePicker: UIView {
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private func setupLayout() {
         addSubview(pickerView)
         pickerView.translatesAutoresizingMaskIntoConstraints = false
@@ -84,7 +81,7 @@ class CustomDatePicker: UIView {
         selectedDayRow = dateComponents.day! - 1
         selectedYearRow = dateComponents.year! - 1
         
-        if isEnglish {
+        if dateFormat == .monthFirst {
             pickerView.selectRow(selectedMounthRow, inComponent: 0, animated: false)
             pickerView.selectRow(selectedDayRow, inComponent: 1, animated: false)
         } else {
@@ -116,13 +113,13 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         if component == 0 {
-            if isEnglish {
+            if dateFormat == .monthFirst {
                 return months.count
             } else {
                 return months[selectedMounthRow].days.count
             }
         } else if component == 1  {
-            if isEnglish {
+            if dateFormat == .monthFirst {
                 return months[selectedMounthRow].days.count
             } else {
                 return months.count
@@ -134,13 +131,13 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         if component == 0 {
-            if isEnglish {
+            if dateFormat == .monthFirst {
                 return months[row].name
             } else {
                 return months[selectedMounthRow].days[row].name
             }
         } else if component == 1 {
-            if isEnglish {
+            if dateFormat == .monthFirst {
                 return months[selectedMounthRow].days[row].name
             } else {
                 return months[row].name
@@ -152,7 +149,7 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         if component == 0 {
-            if isEnglish {
+            if dateFormat == .monthFirst {
                 selectedMounthRow = row
                 pickerView.reloadComponent(1)
                 if months[row].days.first(where: {( $0.number == selectedDayRow )}) == nil {
@@ -164,7 +161,7 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
             }
         }
         if component == 1 {
-            if isEnglish {
+            if dateFormat == .monthFirst {
                 selectedDayRow = row
             } else {
                 selectedMounthRow = row
@@ -188,46 +185,59 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
         }
     }
     
-    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        var title: String!
-        var myAttribute: [NSAttributedString.Key: AnyObject] = [NSAttributedString.Key.foregroundColor: appearance.datePickerTextColor]
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let label = view as? UILabel ?? UILabel()
+        
+        pickerView.subviews[1].backgroundColor = appearance.separatorColor
+        pickerView.subviews[2].backgroundColor = appearance.separatorColor
 
+        var title: String!
+        let paragraph = NSMutableParagraphStyle()
+        var myAttribute = [NSAttributedString.Key.foregroundColor: appearance.datePickerTextColor,
+                           NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)]
+        
         if component == 0 {
-            if isEnglish {
+            if dateFormat == .monthFirst {
                 title = months[row].name
-                let paragraph = NSMutableParagraphStyle()
                 paragraph.alignment = .left
                 myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
             } else {
                 title = months[selectedMounthRow].days[row].name
+                paragraph.alignment = .center
+                myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
             }
         } else if component == 1 {
-            if isEnglish {
+            if dateFormat == .monthFirst {
                 title = months[selectedMounthRow].days[row].name
+                paragraph.alignment = .center
+                myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
             } else {
                 title = months[row].name
-                let paragraph = NSMutableParagraphStyle()
                 paragraph.alignment = .left
                 myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
             }
         } else {
+            paragraph.alignment = .center
+            myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
             title = years[row].name
         }
-        return NSAttributedString(string: title, attributes: myAttribute)
+        
+        label.attributedText = NSAttributedString(string: title, attributes: myAttribute)
+        return label
     }
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
         if component == 0 {
-            if isEnglish {
-                return 120
+            if dateFormat == .monthFirst {
+                return 110
             } else {
-                return 40
+                return 80
             }
         } else if component == 1 {
-            if isEnglish {
+            if dateFormat == .monthFirst {
                 return 40
             } else {
-                return 120
+                return 110
             }
         } else if component == 2 {
             return 100

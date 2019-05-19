@@ -23,9 +23,14 @@ class ActionSheet: UIViewController {
     }
     
     func addItems(_ items: [ActionSheetItem]) {
-        items.forEach { (item) in
+        for (index, item) in items.enumerated() {
             item.appearance = appearance
             stackView.addArrangedSubview(item)
+
+            if item is ActionSheetButton, index == items.count - 1 {
+                let button = items.last as! ActionSheetButton
+                button.hideSeparator()
+            }
         }
     }
     

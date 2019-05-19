@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     var appearance: ActionSheetAppearance {
         let appearance = ActionSheetAppearance()
         appearance.backgroundColor = UIColor(red: 16/256, green: 32/256, blue: 50/256, alpha: 0.8)
-        appearance.separatorColor = UIColor.clear
+        appearance.separatorColor = UIColor.red
         appearance.selectionColor = UIColor(red: 5/256, green: 10/256, blue: 15/256, alpha: 1)
         appearance.textColor = UIColor(red: 31/256, green: 154/256, blue: 254/256, alpha: 1)
         
@@ -31,27 +31,12 @@ class ViewController: UIViewController {
         return appearance
     }
     
-    private var isEnglish: Bool {
-        guard let code = Locale.preferredLanguages.first?.components(separatedBy: "-").first else { return false }
-        
-        if code == "en" {
-            return true
-        } else {
-            return false
-        }
-    }
-    
     lazy var dateFormatter: DateFormatter = {
         let languageIdentifier = Locale.preferredLanguages.first!
         let locale = Locale(identifier: languageIdentifier)
         
         let dateFormatter = DateFormatter()
-
-        if isEnglish {
-            dateFormatter.dateFormat = "MMMM dd, yyyy h:mm a"
-        } else {
-            dateFormatter.dateFormat = "dd MMMM, yyyy HH:mm"
-        }
+        dateFormatter.dateFormat = "MMMM dd, yyyy h:mm"
         
         dateFormatter.locale = locale
         return dateFormatter
@@ -91,7 +76,7 @@ class ViewController: UIViewController {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
 
-        let datePicker = ActionSheetDatePickerView(type: .date, selectedDate: date) { (selectedDate) in
+        let datePicker = ActionSheetDatePickerView(dateFormat: .monthFirst, selectedDate: date) { (selectedDate) in
             self.date = selectedDate
         }
         
@@ -108,7 +93,7 @@ class ViewController: UIViewController {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
         
-        let timePicker = ActionSheetDatePickerView(type: .time, selectedDate: date) { (selectedDate) in
+        let timePicker = ActionSheetDatePickerView(timeFormat: .H24, selectedDate: date) { (selectedDate) in
             self.date = selectedDate
         }
         
