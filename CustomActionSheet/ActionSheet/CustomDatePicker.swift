@@ -247,7 +247,6 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
 
 
 private class Month {
-    
     var name: String!
     var days = [Day]()
     var number: Int!

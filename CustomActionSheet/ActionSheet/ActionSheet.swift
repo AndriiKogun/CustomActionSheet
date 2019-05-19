@@ -38,6 +38,7 @@ class ActionSheet: UIViewController {
 
     private var containerView: UIView = {
         let containerView = UIView()
+        containerView.contentMode = .scaleAspectFill
         containerView.layer.cornerRadius = 16.0
         containerView.clipsToBounds = true
         return containerView
@@ -45,13 +46,10 @@ class ActionSheet: UIViewController {
     
     let stackView: UIStackView = {
         let stackView = UIStackView()
-        stackView.contentMode = .scaleAspectFit
         stackView.backgroundColor = UIColor.clear
         stackView.axis = .vertical
         stackView.distribution = .equalSpacing
         stackView.alignment = .fill
-        stackView.clipsToBounds = true
-        stackView.layer.cornerRadius = 16.0
         return stackView
     }()
     
@@ -110,9 +108,9 @@ class ActionSheet: UIViewController {
     }
     
     @objc private func hideAction() {
-        UIView.animate(withDuration: 0.2, animations: {
+        UIView.animate(withDuration: 0.3, animations: {
             self.view.backgroundColor = UIColor.clear
-            self.bottomAnchor.constant = 300
+            self.bottomAnchor.constant = self.view.bounds.height
             self.view.layoutIfNeeded()
 
         }, completion: { (completion) in
