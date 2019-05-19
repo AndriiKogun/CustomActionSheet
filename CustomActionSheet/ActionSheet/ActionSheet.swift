@@ -170,7 +170,7 @@ class ActionSheet: UIViewController {
 
         contentView.addSubview(cancelButtonView)
         cancelButtonView.translatesAutoresizingMaskIntoConstraints = false
-        cancelButtonView.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 6).isActive = true
+        cancelButtonView.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 7).isActive = true
         cancelButtonView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         cancelButtonView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
         

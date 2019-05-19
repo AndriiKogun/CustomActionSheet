@@ -26,7 +26,7 @@ class ActionSheetHeaderView: UIView {
         titleLabel.font = UIFont.systemFont(ofSize: 14)
         titleLabel.text = title
         titleLabel.textAlignment = .center
-        titleLabel.numberOfLines = 1
+        titleLabel.numberOfLines = 0
         return titleLabel
     }()
     
@@ -74,11 +74,10 @@ class ActionSheetHeaderView: UIView {
         separatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         
         if message.isEmpty {
-            heightAnchor.constraint(equalToConstant: 60).isActive = true
-            
             contentView.addSubview(titleLabel)
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+            titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22).isActive = true
+            titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -22).isActive = true
             titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
             titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:-16).isActive = true
         } else {

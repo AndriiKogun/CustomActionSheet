@@ -39,6 +39,8 @@ class ActionSheetButton: UIView {
         let titleLabel = UILabel()
         titleLabel.textColor = appearance.textColor
         titleLabel.text = title
+        
+        titleLabel.lineBreakMode = .byTruncatingMiddle
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1
         return titleLabel
@@ -83,7 +85,8 @@ class ActionSheetButton: UIView {
         iconImageView.translatesAutoresizingMaskIntoConstraints = false
         iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         iconImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32).isActive = true
-        
+        iconImageView.setContentCompressionResistancePriority(UILayoutPriority(rawValue: 1000), for: NSLayoutConstraint.Axis.horizontal);
+
         contentView.addSubview(titleLabel)
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true

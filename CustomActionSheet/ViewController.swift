@@ -35,8 +35,8 @@ class ViewController: UIViewController {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
 
-        actionSheet.addHeaderWith(title: "Twitter.com", message: "Header message")
-        actionSheet.addButonWith(icon: UIImage(named: "1")!, title: "Open in...") {
+        actionSheet.addHeaderWith(title: "Twitter.com Twitter.com Twitter.com Twitter.com Twitter.com Twitter.com Twitter.com Twitter.com", message: "message message message message message message message message message message message message message message message")
+        actionSheet.addButonWith(icon: UIImage(named: "1")!, title: "Open in Open in Open in Open in Open in Open in") {
             self.actionLabel.text = "Open in..."
         }
         actionSheet.addButonWith(icon: UIImage(named: "2")!, title: "Copy Link") {
@@ -57,7 +57,7 @@ class ViewController: UIViewController {
         actionSheet.appearance = appearance
 
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM dd,yyyy"
+        dateFormatter.dateFormat = "MMM d, h: mm a"
 
         actionSheet.addDatePicker { (date) in
             self.selectingDateLabel.text = dateFormatter.string(from: date)

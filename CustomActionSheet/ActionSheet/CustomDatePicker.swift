@@ -183,6 +183,10 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
         }
         return 0
     }
+    
+    func pickerView(_ pickerView: UIPickerView, rowHeightForComponent component: Int) -> CGFloat {
+        return 36
+    }
 }
 
 
