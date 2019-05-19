@@ -50,7 +50,6 @@ class CustomDatePicker: UIView {
         super.init(frame: CGRect.zero)
         self.selectedDate = selectedDate
         setupLayout()
-        setupUI()
         setup()
     }
     
@@ -65,10 +64,6 @@ class CustomDatePicker: UIView {
         pickerView.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
         pickerView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         pickerView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
-    }
-    
-    private func setupUI() {
-        backgroundColor = appearance.backgroundColor
     }
     
     private func setup() {
