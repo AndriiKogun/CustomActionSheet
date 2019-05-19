@@ -8,10 +8,15 @@
 
 import UIKit
 
-class ActionSheetButton: UIView {
+class ActionSheetButton: ActionSheetItem {
     
-    private let tappedBlock: () -> Void
-    private let appearance: ActionSheetAppearance
+    override var appearance: ActionSheetAppearance! {
+        didSet {
+            setupLayout()
+            contentView.backgroundColor = appearance.backgroundColor
+        }
+    }
+    
     private let title: String
 
     private lazy var iconImageView = UIImageView()
@@ -46,17 +51,14 @@ class ActionSheetButton: UIView {
         return titleLabel
     }()
     
-    init(title: String, appearance: ActionSheetAppearance, tappedBlock: @escaping () -> Void) {
+    init(title: String, tappedBlock: @escaping () -> Void) {
         self.title = title
-        self.appearance = appearance
-        self.tappedBlock = tappedBlock
         super.init(frame: CGRect.zero)
-        setupLayout()
-        contentView.backgroundColor = appearance.backgroundColor
+        self.dissmissBlock = tappedBlock
     }
-
-    convenience init(icon: UIImage, title: String, appearance: ActionSheetAppearance, tappedBlock: @escaping () -> Void) {
-        self.init(title: title, appearance: appearance, tappedBlock: tappedBlock)
+    
+    convenience init(icon: UIImage, title: String, tappedBlock: @escaping () -> Void) {
+        self.init(title: title, tappedBlock: tappedBlock)
         iconImageView.image = icon
     }
     
@@ -112,7 +114,9 @@ class ActionSheetButton: UIView {
     }
     
     @objc private func buttonAction(_ sender: UIButton) {
-        tappedBlock()
+        if let dissmissBlock = dissmissBlock {
+            dissmissBlock()
+        }
     }
 }
 

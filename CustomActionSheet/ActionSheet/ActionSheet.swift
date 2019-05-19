@@ -8,50 +8,30 @@
 
 import UIKit
 
+enum ActionSheetType {
+    case date
+    case time
+}
+
 class ActionSheet: UIViewController {
     
     var appearance: ActionSheetAppearance
-    
-    var date = Date()
 
     func show(from viewController: UIViewController) {
         modalPresentationStyle = .overFullScreen
         viewController.present(self, animated: false, completion: nil)
     }
     
-    func addHeaderWith(title: String, message: String) {
-        let header = ActionSheetHeaderView(title: title, message: message, appearance: appearance)
-        stackView.addArrangedSubview(header)
-    }
-    
-    func addDatePicker(didChangeBlock completionBlock: ((_ date: Date) -> Void)?) {
-        let datePicker = ActionSheetDatePickerView(appearance: appearance) { (date) in
-            self.date = date
-            if let completionBlock = completionBlock {
-                completionBlock(date)
-            }
+    func addItems(_ items: [ActionSheetItem]) {
+        items.forEach { (item) in
+            item.appearance = appearance
+            stackView.addArrangedSubview(item)
         }
-        stackView.addArrangedSubview(datePicker)
     }
     
-    func addButonWith(title: String, tappedBlock: @escaping () -> Void) {
-        let button = ActionSheetButton(title: title, appearance: appearance, tappedBlock: {
-            self.hide()
-            tappedBlock()
-        })
-        stackView.addArrangedSubview(button)
+    func hide() {
+        hideAction()
     }
-    
-    func addButonWith(icon: UIImage, title: String, tappedBlock: @escaping () -> Void) {
-        let button = ActionSheetButton(icon: icon, title: title, appearance: appearance, tappedBlock: {
-            self.hide()
-            tappedBlock()
-        })
-        stackView.addArrangedSubview(button)
-    }
-    
-    var willDismissBlock: (() -> Void)?
-    var didDismissBlock: (() -> Void)?
 
     //MARK: - Private
     private var bottomAnchor: NSLayoutConstraint!
@@ -76,9 +56,10 @@ class ActionSheet: UIViewController {
     }()
     
     private lazy var cancelButtonView: ActionSheetCancelButton = {
-        let cancelButtonView = ActionSheetCancelButton(title: "Cancel", appearance: appearance, tappedBlock: {
+        let cancelButtonView = ActionSheetCancelButton(title: "Cancel", tappedBlock: {
             self.hide()
         })
+        cancelButtonView.appearance = appearance
         cancelButtonView.clipsToBounds = true
         cancelButtonView.layer.cornerRadius = 16.0
         return cancelButtonView
@@ -113,14 +94,14 @@ class ActionSheet: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        show()
+        showAction()
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(hide))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(hideAction))
         tap.delegate = self
         contentView.addGestureRecognizer(tap)
     }
     
-    private func show() {
+    private func showAction() {
         UIView.animate(withDuration: 0.2, delay: 0.0, options: .curveEaseOut, animations: {
             self.view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
             self.bottomAnchor.constant = 0
@@ -128,21 +109,13 @@ class ActionSheet: UIViewController {
         }, completion: nil)
     }
     
-    @objc private func hide() {
-        if let willDismissBlock = self.willDismissBlock {
-            willDismissBlock()
-        }
-        
+    @objc private func hideAction() {
         UIView.animate(withDuration: 0.2, animations: {
             self.view.backgroundColor = UIColor.clear
             self.bottomAnchor.constant = 300
             self.view.layoutIfNeeded()
 
         }, completion: { (completion) in
-            if let didDismissBlock = self.didDismissBlock {
-                didDismissBlock()
-            }
-
             self.dismiss(animated: false, completion: nil)
         })
     }

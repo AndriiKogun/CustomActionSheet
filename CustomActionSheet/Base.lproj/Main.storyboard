@@ -19,73 +19,57 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QlY-6N-my8">
-                                <rect key="frame" x="165" y="433" width="84" height="30"/>
+                                <rect key="frame" x="165" y="632" width="84" height="30"/>
                                 <state key="normal" title="ActionSheet"/>
                                 <connections>
                                     <action selector="action:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ig5-Kk-suW"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jev-sO-NOX">
-                                <rect key="frame" x="108" y="296" width="198" height="30"/>
-                                <state key="normal" title="ActionSheet With DatePicker"/>
+                                <rect key="frame" x="166.5" y="495" width="81" height="30"/>
+                                <state key="normal" title="Select Time"/>
                                 <connections>
-                                    <action selector="dateAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tf5-gr-IDf"/>
+                                    <action selector="timeAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="qft-wR-3RH"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="akJ-Vj-uyd">
-                                <rect key="frame" x="182.5" y="259" width="49" height="29"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Action" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NGa-8c-RJM">
-                                <rect key="frame" x="165.5" y="389" width="83" height="36"/>
+                                <rect key="frame" x="165.5" y="588" width="83" height="36"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Selected Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cX-ya-KSi">
-                                <rect key="frame" x="121.5" y="128" width="171" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Final Selected Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3df-Jt-mUO">
-                                <rect key="frame" x="133" y="228" width="148" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5wO-Gc-2IJ">
-                                <rect key="frame" x="182.5" y="159" width="49" height="29"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date with time" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5wO-Gc-2IJ">
+                                <rect key="frame" x="132.5" y="378" width="149" height="29"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="D7K-ZN-kV4">
+                                <rect key="frame" x="167" y="415" width="80" height="30"/>
+                                <state key="normal" title="Select Date"/>
+                                <connections>
+                                    <action selector="dateAction:" destination="BYZ-38-t0r" eventType="touchUpInside" id="1IS-Ll-iNn"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="5wO-Gc-2IJ" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="3wd-sM-7VT"/>
-                            <constraint firstItem="akJ-Vj-uyd" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="4Yc-za-xGY"/>
-                            <constraint firstItem="3df-Jt-mUO" firstAttribute="top" secondItem="5wO-Gc-2IJ" secondAttribute="bottom" constant="40" id="EwW-EZ-ML3"/>
                             <constraint firstItem="QlY-6N-my8" firstAttribute="top" secondItem="Jev-sO-NOX" secondAttribute="bottom" constant="107" id="MQe-bu-rVf"/>
-                            <constraint firstItem="3df-Jt-mUO" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="PEI-CZ-Xbr"/>
-                            <constraint firstItem="akJ-Vj-uyd" firstAttribute="top" secondItem="3df-Jt-mUO" secondAttribute="bottom" constant="10" id="Pde-KO-IBT"/>
                             <constraint firstItem="NGa-8c-RJM" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="SJG-5d-gcZ"/>
-                            <constraint firstItem="5wO-Gc-2IJ" firstAttribute="top" secondItem="2cX-ya-KSi" secondAttribute="bottom" constant="10" id="UxA-Nz-A5U"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="QlY-6N-my8" secondAttribute="bottom" constant="200" id="Vet-HV-oa0"/>
                             <constraint firstItem="QlY-6N-my8" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="VxU-ii-JIW"/>
-                            <constraint firstItem="Jev-sO-NOX" firstAttribute="top" secondItem="akJ-Vj-uyd" secondAttribute="bottom" constant="8" id="bLH-mH-UHd"/>
                             <constraint firstItem="Jev-sO-NOX" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="bgs-sC-di9"/>
-                            <constraint firstItem="QlY-6N-my8" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="tOf-bL-ehN"/>
-                            <constraint firstItem="2cX-ya-KSi" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xgI-uo-Kxa"/>
+                            <constraint firstItem="Jev-sO-NOX" firstAttribute="top" secondItem="D7K-ZN-kV4" secondAttribute="bottom" constant="50" id="ibo-R3-GSd"/>
+                            <constraint firstItem="D7K-ZN-kV4" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="jrc-Ih-saR"/>
+                            <constraint firstItem="D7K-ZN-kV4" firstAttribute="top" secondItem="5wO-Gc-2IJ" secondAttribute="bottom" constant="8" id="srI-o2-d8z"/>
                             <constraint firstItem="QlY-6N-my8" firstAttribute="top" secondItem="NGa-8c-RJM" secondAttribute="bottom" constant="8" id="xz5-hd-DQ0"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
                         <outlet property="actionLabel" destination="NGa-8c-RJM" id="wD5-K3-Rt6"/>
-                        <outlet property="finalDateLabel" destination="akJ-Vj-uyd" id="aYV-L6-Sm3"/>
-                        <outlet property="selectingDateLabel" destination="5wO-Gc-2IJ" id="fIY-OE-qkC"/>
+                        <outlet property="dateLabel" destination="5wO-Gc-2IJ" id="o7E-ZC-4RX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

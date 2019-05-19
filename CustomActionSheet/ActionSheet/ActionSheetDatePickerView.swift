@@ -8,10 +8,11 @@
 
 import UIKit
 
-class ActionSheetDatePickerView: UIView {
+class ActionSheetDatePickerView: ActionSheetItem {
 
     private let completionBlock: (_ date: Date) -> Void
-    private let appearance: ActionSheetAppearance
+    private let type: ActionSheetType
+    private let selectedDate: Date
     
     private var contentView: UIView = {
         let contentView = UIView()
@@ -25,20 +26,33 @@ class ActionSheetDatePickerView: UIView {
     }()
     
     private lazy var datePicker: CustomDatePicker = {
-        let datePicker = CustomDatePicker(appearance: appearance)
+        let datePicker = CustomDatePicker(selectedDate: selectedDate, appearance: appearance)
         datePicker.delegate = self
         return datePicker
     }()
     
-    init(appearance: ActionSheetAppearance, completionBlock: @escaping (_ date: Date) -> Void) {
-        self.appearance = appearance
+    private lazy var timePicker: CustomTimePicker = {
+        let timePicker = CustomTimePicker(selectedDate: selectedDate, appearance: appearance)
+        timePicker.delegate = self
+        return timePicker
+    }()
+    
+    init(type: ActionSheetType, selectedDate: Date, completionBlock: @escaping (_ date: Date) -> Void) {
+        self.type = type
+        self.selectedDate = selectedDate
         self.completionBlock = completionBlock
         super.init(frame: CGRect.zero)
-        setupLayout()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var appearance: ActionSheetAppearance! {
+        didSet {
+            setupLayout()
+            contentView.backgroundColor = appearance.backgroundColor
+        }
     }
     
     private func setupLayout() {
@@ -58,18 +72,29 @@ class ActionSheetDatePickerView: UIView {
         separatorView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         
-        contentView.addSubview(datePicker)
-        datePicker.translatesAutoresizingMaskIntoConstraints = false
-        datePicker.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        datePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
-        datePicker.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        datePicker.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        if type == .date {
+            contentView.addSubview(datePicker)
+            datePicker.translatesAutoresizingMaskIntoConstraints = false
+            datePicker.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+            datePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+            datePicker.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+            datePicker.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        } else if type == .time {
+            contentView.addSubview(timePicker)
+            timePicker.translatesAutoresizingMaskIntoConstraints = false
+            timePicker.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+            timePicker.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+            timePicker.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+            timePicker.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+        }
     }
 }
 
 //MARK: - CustomDatePickerDelegate
-extension ActionSheetDatePickerView: CustomDatePickerDelegate {
+extension ActionSheetDatePickerView: CustomDatePickerDelegate, CustomTimePickerDelegate {
     func dateDidSelected(date: Date) {
         completionBlock(date)
     }
 }
+
+

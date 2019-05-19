@@ -10,10 +10,10 @@ import UIKit
 
 class ViewController: UIViewController {
     
-    @IBOutlet weak var selectingDateLabel: UILabel!
-    @IBOutlet weak var finalDateLabel: UILabel!
+    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var actionLabel: UILabel!
     
+    var date = Date()
     
     var appearance: ActionSheetAppearance {
         let appearance = ActionSheetAppearance()
@@ -30,25 +30,60 @@ class ViewController: UIViewController {
         
         return appearance
     }
+    
+    private var isEnglish: Bool {
+        guard let code = Locale.preferredLanguages.first?.components(separatedBy: "-").first else { return false }
+        
+        if code == "en" {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    lazy var dateFormatter: DateFormatter = {
+        let languageIdentifier = Locale.preferredLanguages.first!
+        let locale = Locale(identifier: languageIdentifier)
+        
+        let dateFormatter = DateFormatter()
+
+        if isEnglish {
+            dateFormatter.dateFormat = "MMMM dd, yyyy h:mm a"
+        } else {
+            dateFormatter.dateFormat = "dd MMMM, yyyy HH:mm"
+        }
+        
+        dateFormatter.locale = locale
+        return dateFormatter
+    }()
 
     @IBAction func action(_ sender: Any) {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
-
-        actionSheet.addHeaderWith(title: "Twitter.com Twitter.com Twitter.com Twitter.com Twitter.com Twitter.com Twitter.com Twitter.com", message: "message message message message message message message message message message message message message message message")
-        actionSheet.addButonWith(icon: UIImage(named: "1")!, title: "Open in Open in Open in Open in Open in Open in") {
-            self.actionLabel.text = "Open in..."
-        }
-        actionSheet.addButonWith(icon: UIImage(named: "2")!, title: "Copy Link") {
-            self.actionLabel.text = "Copy Link"
-        }
-        actionSheet.addButonWith(title: "Add to Reading List") {
-            self.actionLabel.text = "Add to Reading List"
-        }
-        actionSheet.didDismissBlock = {
-            
+        
+        let header = ActionSheetHeaderView(title: "Twitter.com Twitter.com Twitter.co Twitter.com Twitter.com Twitter.com",
+                                           message: "message message message message message message message message message message")
+        
+        let openButton = ActionSheetButton(icon: UIImage(named: "1")!,
+                                           title: "Open in Open in Open in Open in Open in Open in") {
+                                            
+                                            actionSheet.hide()
+                                            self.actionLabel.text = "Open in..."
         }
         
+        let copyButton = ActionSheetButton(icon: UIImage(named: "2")!,
+                                           title: "Copy Link") {
+                                            
+                                            actionSheet.hide()
+                                            self.actionLabel.text = "Copy Link"
+        }
+
+        let readingButton = ActionSheetButton(title: "Add to Reading List") {
+            actionSheet.hide()
+            self.actionLabel.text = "Add to Reading List"
+        }
+
+        actionSheet.addItems([header, openButton, copyButton, readingButton])
         actionSheet.show(from: self)
     }
     
@@ -56,17 +91,33 @@ class ViewController: UIViewController {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
 
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMM d, h: mm a"
+        let datePicker = ActionSheetDatePickerView(type: .date, selectedDate: date) { (selectedDate) in
+            self.date = selectedDate
+        }
+        
+        let searchButton = ActionSheetButton(title: "Search") {
+            actionSheet.hide()
+            self.dateLabel.text = self.dateFormatter.string(from: self.date)
+        }
 
-        actionSheet.addDatePicker { (date) in
-            self.selectingDateLabel.text = dateFormatter.string(from: date)
+        actionSheet.addItems([datePicker, searchButton])
+        actionSheet.show(from: self)
+    }
+    
+    @IBAction func timeAction(_ sender: Any) {
+        let actionSheet = ActionSheet()
+        actionSheet.appearance = appearance
+        
+        let timePicker = ActionSheetDatePickerView(type: .time, selectedDate: date) { (selectedDate) in
+            self.date = selectedDate
         }
         
-        actionSheet.addButonWith(title: "Search") {
-            self.finalDateLabel.text = dateFormatter.string(from: actionSheet.date)
+        let searchButton = ActionSheetButton(title: "Search") {
+            actionSheet.hide()
+            self.dateLabel.text = self.dateFormatter.string(from: self.date)
         }
         
+        actionSheet.addItems([timePicker, searchButton])
         actionSheet.show(from: self)
     }
 }

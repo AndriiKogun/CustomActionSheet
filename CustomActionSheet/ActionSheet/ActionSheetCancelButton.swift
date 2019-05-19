@@ -8,10 +8,8 @@
 
 import UIKit
 
-class ActionSheetCancelButton: UIView {
+class ActionSheetCancelButton: ActionSheetItem {
 
-    private let tappedBlock: () -> Void
-    private let appearance: ActionSheetAppearance
     private let title: String
     
     private lazy var sheetButton: UIButton = {
@@ -25,16 +23,20 @@ class ActionSheetCancelButton: UIView {
         return sheetButton
     }()
     
-    init(title: String, appearance: ActionSheetAppearance, tappedBlock: @escaping () -> Void) {
+    init(title: String, tappedBlock: @escaping () -> Void) {
         self.title = title
-        self.appearance = appearance
-        self.tappedBlock = tappedBlock
         super.init(frame: CGRect.zero)
-        setupLayout()
+        self.dissmissBlock = tappedBlock
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override var appearance: ActionSheetAppearance! {
+        didSet {
+            setupLayout()
+        }
     }
     
     private func setupLayout() {
@@ -59,6 +61,8 @@ class ActionSheetCancelButton: UIView {
     }
     
     @objc private func buttonAction(_ sender: UIButton) {
-        tappedBlock()
+        if let dissmissBlock = dissmissBlock {
+            dissmissBlock()
+        }
     }
 }
