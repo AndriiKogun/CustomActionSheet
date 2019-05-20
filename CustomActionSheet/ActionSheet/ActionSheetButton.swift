@@ -119,6 +119,7 @@ class ActionSheetButton: ActionSheetItem {
     }
     
     @objc private func buttonAction(_ sender: UIButton) {
+        delegate?.hide()
         if let dissmissBlock = dissmissBlock {
             dissmissBlock()
         }

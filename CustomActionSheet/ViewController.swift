@@ -63,24 +63,20 @@ class ViewController: UIViewController {
         let openButton = ActionSheetButton(icon: UIImage(named: "1")!,
                                            title: "Open in Open in Open in Open in Open in Open in") {
                                             
-                                            actionSheet.hide()
                                             self.actionLabel.text = "Open in..."
         }
         
         let copyButton = ActionSheetButton(icon: UIImage(named: "2")!,
                                            title: "Copy Link") {
                                             
-                                            actionSheet.hide()
                                             self.actionLabel.text = "Copy Link"
         }
 
         let readingButton = ActionSheetButton(title: "Add to Reading List") {
-            actionSheet.hide()
             self.actionLabel.text = "Add to Reading List"
         }
         
         actionSheet.addCancelButonWith(title: "Cancel") {
-            actionSheet.hide()
             
         }
 
@@ -97,12 +93,10 @@ class ViewController: UIViewController {
         }
         
         let searchButton = ActionSheetButton(title: "Search") {
-            actionSheet.hide()
             self.dateLabel.text = self.dateFormatter.string(from: self.date)
         }
         
         actionSheet.addCancelButonWith(title: "Cancel") {
-            actionSheet.hide()
 
         }
 
@@ -119,7 +113,6 @@ class ViewController: UIViewController {
         }
         
         let searchButton = ActionSheetButton(title: "Search") {
-            actionSheet.hide()
             self.dateLabel.text = self.dateFormatter.string(from: self.date)
         }
         

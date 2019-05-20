@@ -10,6 +10,7 @@ import UIKit
 
 class ActionSheetItem: UIView {
 
+    weak var delegate: ActionSheet?
     var dissmissBlock: (() -> Void)?
     var appearance: ActionSheetAppearance!
 }
