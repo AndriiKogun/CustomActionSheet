@@ -37,6 +37,7 @@ class ActionSheet: UIViewController {
     
     func addCancelButonWith(title: String, tappedBlock: @escaping () -> Void) {
         cancelButton = ActionSheetButton(title: title) {
+            self.hide()
             tappedBlock()
         }
         

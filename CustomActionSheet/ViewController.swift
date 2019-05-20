@@ -77,7 +77,7 @@ class ViewController: UIViewController {
         }
         
         actionSheet.addCancelButonWith(title: "Cancel") {
-            
+
         }
 
         actionSheet.addItems([header, openButton, copyButton, readingButton])
