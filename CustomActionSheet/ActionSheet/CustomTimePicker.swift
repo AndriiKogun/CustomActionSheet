@@ -189,7 +189,7 @@ extension CustomTimePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
 
         var title: String!
         let myAttribute = [NSAttributedString.Key.foregroundColor: appearance.datePickerTextColor,
-                           NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22),
+                           NSAttributedString.Key.font: appearance.pickerTextFont,
                            NSAttributedString.Key.paragraphStyle: paragraph]
 
         if component == 0 {

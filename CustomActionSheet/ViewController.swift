@@ -16,18 +16,29 @@ class ViewController: UIViewController {
     var date = Date()
     
     var appearance: ActionSheetAppearance {
-        let appearance = ActionSheetAppearance()
+        var appearance = ActionSheetAppearance()
+        
+        //Colors
         appearance.backgroundColor = UIColor(red: 16/256, green: 32/256, blue: 50/256, alpha: 0.8)
         appearance.separatorColor = UIColor.red
         appearance.selectionColor = UIColor(red: 5/256, green: 10/256, blue: 15/256, alpha: 1)
         appearance.textColor = UIColor(red: 31/256, green: 154/256, blue: 254/256, alpha: 1)
-        
+        appearance.textColor = UIColor(red: 31/256, green: 154/256, blue: 254/256, alpha: 1)
+        appearance.cencelButtonColor = UIColor.red
+
         appearance.headerColor = UIColor(red: 16/256, green: 32/256, blue: 50/256, alpha: 0.8)
         appearance.headerTitleColor = UIColor.lightGray
         appearance.headerMessageColor = UIColor.lightGray.withAlphaComponent(0.6)
 
         appearance.datePickerTextColor = UIColor.white
         
+        //Fonts
+        appearance.headerTitleFont = UIFont.systemFont(ofSize: 14)
+        appearance.headerMessageFont = UIFont.systemFont(ofSize: 12)
+        appearance.buttonTextFont = UIFont.systemFont(ofSize: 16)
+        appearance.cancelButtonTextFont = UIFont.systemFont(ofSize: 18)
+        appearance.pickerTextFont = UIFont.systemFont(ofSize: 22)
+
         return appearance
     }
     
@@ -67,6 +78,11 @@ class ViewController: UIViewController {
             actionSheet.hide()
             self.actionLabel.text = "Add to Reading List"
         }
+        
+        actionSheet.addCancelButonWith(title: "Cancel") {
+            actionSheet.hide()
+            
+        }
 
         actionSheet.addItems([header, openButton, copyButton, readingButton])
         actionSheet.show(from: self)
@@ -83,6 +99,11 @@ class ViewController: UIViewController {
         let searchButton = ActionSheetButton(title: "Search") {
             actionSheet.hide()
             self.dateLabel.text = self.dateFormatter.string(from: self.date)
+        }
+        
+        actionSheet.addCancelButonWith(title: "Cancel") {
+            actionSheet.hide()
+
         }
 
         actionSheet.addItems([datePicker, searchButton])

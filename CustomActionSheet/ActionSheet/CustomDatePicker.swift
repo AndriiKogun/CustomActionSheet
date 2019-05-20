@@ -194,7 +194,7 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
         var title: String!
         let paragraph = NSMutableParagraphStyle()
         var myAttribute = [NSAttributedString.Key.foregroundColor: appearance.datePickerTextColor,
-                           NSAttributedString.Key.font: UIFont.systemFont(ofSize: 22)]
+                           NSAttributedString.Key.font: appearance.pickerTextFont]
         
         if component == 0 {
             if dateFormat == .monthFirst {

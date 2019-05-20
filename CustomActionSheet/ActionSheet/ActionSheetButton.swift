@@ -44,7 +44,7 @@ class ActionSheetButton: ActionSheetItem {
         let titleLabel = UILabel()
         titleLabel.textColor = appearance.textColor
         titleLabel.text = title
-        
+        titleLabel.font = appearance.buttonTextFont
         titleLabel.lineBreakMode = .byTruncatingMiddle
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 1

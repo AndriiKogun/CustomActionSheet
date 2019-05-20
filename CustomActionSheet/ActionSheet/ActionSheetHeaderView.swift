@@ -22,7 +22,7 @@ class ActionSheetHeaderView: ActionSheetItem {
     private lazy var titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.textColor = appearance.headerTitleColor
-        titleLabel.font = UIFont.systemFont(ofSize: 14)
+        titleLabel.font = appearance.headerTitleFont
         titleLabel.text = title
         titleLabel.textAlignment = .center
         titleLabel.numberOfLines = 0
@@ -32,7 +32,7 @@ class ActionSheetHeaderView: ActionSheetItem {
     private lazy var messageLabel: UILabel = {
         let messageLabel = UILabel()
         messageLabel.textColor = appearance.headerMessageColor
-        messageLabel.font = UIFont.systemFont(ofSize: 12)
+        messageLabel.font = appearance.headerMessageFont
         messageLabel.text = message
         messageLabel.textAlignment = .center
         messageLabel.numberOfLines = 0

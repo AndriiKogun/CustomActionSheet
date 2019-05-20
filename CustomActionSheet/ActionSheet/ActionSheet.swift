@@ -34,6 +34,21 @@ class ActionSheet: UIViewController {
         }
     }
     
+    func addCancelButonWith(title: String, tappedBlock: @escaping () -> Void) {
+        cancelButton = ActionSheetButton(title: title) {
+            tappedBlock()
+        }
+        
+        var newAppearance = appearance
+        newAppearance.textColor = appearance.cencelButtonColor
+        newAppearance.buttonTextFont = appearance.cancelButtonTextFont
+        
+        cancelButton?.appearance = newAppearance
+        cancelButton?.hideSeparator()
+        cancelButton?.clipsToBounds = true
+        cancelButton?.layer.cornerRadius = 16.0
+    }
+    
     func hide() {
         hideAction()
     }
@@ -57,16 +72,6 @@ class ActionSheet: UIViewController {
         stackView.alignment = .fill
         return stackView
     }()
-    
-    private lazy var cancelButtonView: ActionSheetCancelButton = {
-        let cancelButtonView = ActionSheetCancelButton(title: "Cancel", tappedBlock: {
-            self.hide()
-        })
-        cancelButtonView.appearance = appearance
-        cancelButtonView.clipsToBounds = true
-        cancelButtonView.layer.cornerRadius = 16.0
-        return cancelButtonView
-    }()
 
     private var contentView: UIView = {
         let contentView = UIView()
@@ -81,6 +86,8 @@ class ActionSheet: UIViewController {
         return true
     }
     
+    private var cancelButton: ActionSheetButton?
+    
     init() {
         self.appearance = ActionSheetAppearance()
         super.init(nibName: nil, bundle: nil)
@@ -92,7 +99,7 @@ class ActionSheet: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupLayour()
+        setupLayout()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -123,7 +130,7 @@ class ActionSheet: UIViewController {
         })
     }
     
-    private func setupLayour() {
+    private func setupLayout() {
         view.addSubview(contentView)
         contentView.translatesAutoresizingMaskIntoConstraints = false
         contentView.heightAnchor.constraint(equalTo: view.heightAnchor).isActive = true
@@ -136,7 +143,7 @@ class ActionSheet: UIViewController {
         containerView.translatesAutoresizingMaskIntoConstraints = false
         containerView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
         containerView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-
+        
         containerView.addSubview(stackView)
         stackView.translatesAutoresizingMaskIntoConstraints = false
         stackView.topAnchor.constraint(equalTo: containerView.topAnchor).isActive = true
@@ -144,16 +151,24 @@ class ActionSheet: UIViewController {
         stackView.leftAnchor.constraint(equalTo: containerView.leftAnchor).isActive = true
         stackView.rightAnchor.constraint(equalTo: containerView.rightAnchor).isActive = true
 
-        contentView.addSubview(cancelButtonView)
-        cancelButtonView.translatesAutoresizingMaskIntoConstraints = false
-        cancelButtonView.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 7).isActive = true
-        cancelButtonView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        cancelButtonView.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
-        
-        if hasHomeIndicator {
-            cancelButtonView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+        if let cancelButton = cancelButton {
+            contentView.addSubview(cancelButton)
+            cancelButton.translatesAutoresizingMaskIntoConstraints = false
+            cancelButton.topAnchor.constraint(equalTo: containerView.bottomAnchor, constant: 7).isActive = true
+            cancelButton.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+            cancelButton.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+            
+            if hasHomeIndicator {
+                cancelButton.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            } else {
+                cancelButton.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
+            }
         } else {
-            cancelButtonView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
+            if hasHomeIndicator {
+                containerView.bottomAnchor.constraint(equalTo: contentView.safeAreaLayoutGuide.bottomAnchor).isActive = true
+            } else {
+                containerView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -12).isActive = true
+            }
         }
     }
 }
