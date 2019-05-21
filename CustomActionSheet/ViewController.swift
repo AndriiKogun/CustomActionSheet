@@ -57,10 +57,9 @@ class ViewController: UIViewController {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
         
-        let header = ActionSheetHeaderView(title: "Twitter.com Twitter.com Twitter.co Twitter.com Twitter.com Twitter.com")
+        let header = ActionSheetHeaderView(message: "Twitter.com Twitter.com Twitter.co Twitter.com Twitter.com Twitter.com")
         
-        let openButton = ActionSheetButton(icon: UIImage(named: "1")!,
-                                           title: "Open in Open in Open in Open in Open in Open in") {
+        let openButton = ActionSheetButton(title: "Open in Open in Open in Open in Open in Open in") {
                                             
                                             self.actionLabel.text = "Open in..."
         }

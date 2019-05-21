@@ -10,7 +10,7 @@ import UIKit
 
 class ActionSheetHeaderView: ActionSheetItem {
 
-    private let title: String
+    private var title: String?
     private var message: String?
     
     private lazy var contentView: UIView = {
@@ -46,8 +46,13 @@ class ActionSheetHeaderView: ActionSheetItem {
     }()
     
     init(title: String) {
-        self.title = title
         super.init(frame: CGRect.zero)
+        self.title = title
+    }
+    
+    init(message: String) {
+        super.init(frame: CGRect.zero)
+        self.message = message
     }
 
     init(title: String, message: String) {
@@ -89,13 +94,20 @@ class ActionSheetHeaderView: ActionSheetItem {
             titleLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -22).isActive = true
             titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
             titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:-16).isActive = true
+        } else if title == nil {
+            contentView.addSubview(messageLabel)
+            messageLabel.translatesAutoresizingMaskIntoConstraints = false
+            messageLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22).isActive = true
+            messageLabel.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -22).isActive = true
+            messageLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
+            messageLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:-16).isActive = true
         } else {
             contentView.addSubview(titleLabel)
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20).isActive = true
             titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 16).isActive = true
             titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant:-16).isActive = true
-
+            
             contentView.addSubview(messageLabel)
             messageLabel.translatesAutoresizingMaskIntoConstraints = false
             messageLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 12).isActive = true

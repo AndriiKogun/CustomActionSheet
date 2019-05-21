@@ -79,7 +79,6 @@ class ActionSheet: UIViewController {
 
     private var contentView: UIView = {
         let contentView = UIView()
-        
         return contentView
     }()
     

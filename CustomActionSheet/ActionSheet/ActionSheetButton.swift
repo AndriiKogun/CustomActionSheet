@@ -86,19 +86,28 @@ class ActionSheetButton: ActionSheetItem {
         separatorView.leftAnchor.constraint(equalTo: leftAnchor).isActive = true
         separatorView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-
-        contentView.addSubview(iconImageView)
-        iconImageView.translatesAutoresizingMaskIntoConstraints = false
-        iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        iconImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        iconImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
-        iconImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32).isActive = true
         
-        contentView.addSubview(titleLabel)
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
-        titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        titleLabel.leftAnchor.constraint(greaterThanOrEqualTo: iconImageView.rightAnchor, constant: 8).isActive = true
+        if iconImageView.image == nil {
+            contentView.addSubview(titleLabel)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+            titleLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32).isActive = true
+            titleLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor, constant: -32).isActive = true
+        } else {
+            contentView.addSubview(iconImageView)
+            iconImageView.translatesAutoresizingMaskIntoConstraints = false
+            iconImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+            iconImageView.heightAnchor.constraint(equalToConstant: 30).isActive = true
+            iconImageView.widthAnchor.constraint(equalToConstant: 30).isActive = true
+            iconImageView.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 32).isActive = true
+            
+            contentView.addSubview(titleLabel)
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            titleLabel.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+            titleLabel.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+            titleLabel.leftAnchor.constraint(greaterThanOrEqualTo: iconImageView.rightAnchor, constant: 8).isActive = true
+        }
         
         contentView.addSubview(sheetButton)
         sheetButton.translatesAutoresizingMaskIntoConstraints = false
@@ -111,11 +120,14 @@ class ActionSheetButton: ActionSheetItem {
     @objc private func touchDownAction(_ sender: UIButton) {
         UIView.animate(withDuration: 0.2) {
             self.contentView.backgroundColor = self.appearance.selectionColor
+            self.separatorView.backgroundColor = self.appearance.selectionColor
+
         }
     }
     
     @objc private func touchDragOutsideAction(_ sender: UIButton) {
         self.contentView.backgroundColor = self.appearance.backgroundColor
+        self.separatorView.backgroundColor = self.appearance.separatorColor
     }
     
     @objc private func buttonAction(_ sender: UIButton) {
