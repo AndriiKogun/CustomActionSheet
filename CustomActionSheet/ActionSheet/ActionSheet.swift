@@ -36,6 +36,7 @@ class ActionSheet: UIViewController {
     }
     
     func addCancelButonWith(title: String, tappedBlock: @escaping () -> Void) {
+        cancelBlock = tappedBlock
         cancelButton = ActionSheetButton(title: title) {
             self.hide()
             tappedBlock()
@@ -50,8 +51,6 @@ class ActionSheet: UIViewController {
         cancelButton?.clipsToBounds = true
         cancelButton?.layer.cornerRadius = 16.0
     }
-    
-    var dissmissBlock: (() -> Void)?
     
     func hide() {
         hideAction()
@@ -90,7 +89,8 @@ class ActionSheet: UIViewController {
     }
     
     private var cancelButton: ActionSheetButton?
-    
+    private var cancelBlock: (() -> Void)?
+
     init() {
         self.appearance = ActionSheetAppearance()
         super.init(nibName: nil, bundle: nil)
@@ -179,7 +179,13 @@ class ActionSheet: UIViewController {
 
 extension ActionSheet: UIGestureRecognizerDelegate {
     func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldReceive touch: UITouch) -> Bool {
-        return touch.view == gestureRecognizer.view
+        if touch.view == gestureRecognizer.view {
+            if let cancelBlock = cancelBlock {
+                cancelBlock()
+            }
+            return true
+        }
+        return false
     }
 }
 

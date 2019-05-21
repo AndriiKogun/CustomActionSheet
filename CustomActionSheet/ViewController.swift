@@ -77,10 +77,6 @@ class ViewController: UIViewController {
         actionSheet.addCancelButonWith(title: "Cancel") {
             // when tap om cancel button
         }
-        
-        actionSheet.dissmissBlock = {
-            // when tap om background
-        }
 
         actionSheet.addItems([header, openButton, copyButton, readingButton])
         actionSheet.show(from: self)
