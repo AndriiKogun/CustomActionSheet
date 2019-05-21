@@ -51,6 +51,8 @@ class ActionSheet: UIViewController {
         cancelButton?.layer.cornerRadius = 16.0
     }
     
+    var dissmissBlock: (() -> Void)?
+    
     func hide() {
         hideAction()
     }

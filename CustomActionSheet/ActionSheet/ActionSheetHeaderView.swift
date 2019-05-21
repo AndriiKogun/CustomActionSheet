@@ -11,7 +11,7 @@ import UIKit
 class ActionSheetHeaderView: ActionSheetItem {
 
     private let title: String
-    private let message: String
+    private var message: String?
     
     private lazy var contentView: UIView = {
         let contentView = UIView()
@@ -44,6 +44,11 @@ class ActionSheetHeaderView: ActionSheetItem {
         separatorView.backgroundColor = appearance.separatorColor
         return separatorView
     }()
+    
+    init(title: String) {
+        self.title = title
+        super.init(frame: CGRect.zero)
+    }
 
     init(title: String, message: String) {
         self.title = title
@@ -77,7 +82,7 @@ class ActionSheetHeaderView: ActionSheetItem {
         separatorView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         separatorView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         
-        if message.isEmpty {
+        if message == nil {
             contentView.addSubview(titleLabel)
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
             titleLabel.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 22).isActive = true

@@ -57,8 +57,7 @@ class ViewController: UIViewController {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
         
-        let header = ActionSheetHeaderView(title: "Twitter.com Twitter.com Twitter.co Twitter.com Twitter.com Twitter.com",
-                                           message: "message message message message message message message message message message")
+        let header = ActionSheetHeaderView(title: "Twitter.com Twitter.com Twitter.co Twitter.com Twitter.com Twitter.com")
         
         let openButton = ActionSheetButton(icon: UIImage(named: "1")!,
                                            title: "Open in Open in Open in Open in Open in Open in") {
@@ -77,7 +76,11 @@ class ViewController: UIViewController {
         }
         
         actionSheet.addCancelButonWith(title: "Cancel") {
-
+            // when tap om cancel button
+        }
+        
+        actionSheet.dissmissBlock = {
+            // when tap om background
         }
 
         actionSheet.addItems([header, openButton, copyButton, readingButton])
@@ -120,4 +123,3 @@ class ViewController: UIViewController {
         actionSheet.show(from: self)
     }
 }
-
