@@ -14,9 +14,34 @@ protocol CustomDatePickerDelegate: class {
 
 class CustomDatePicker: UIView {
     
-    enum Format {
+    enum Format: Int {
+        case yearFirst
         case monthFirst
         case dayFirst
+        
+        var yearIndex: Int {
+            switch self {
+            case .dayFirst: return 2
+            case .monthFirst: return 2
+            case .yearFirst: return 0
+            }
+        }
+        
+        var monthIndex: Int {
+            switch self {
+            case .dayFirst: return 1
+            case .monthFirst: return 0
+            case .yearFirst: return 1
+            }
+        }
+
+        var dayIndex: Int {
+            switch self {
+            case .dayFirst: return 0
+            case .monthFirst: return 1
+            case .yearFirst: return 2
+            }
+        }
     }
     
     weak var delegate: CustomDatePickerDelegate?
@@ -81,15 +106,9 @@ class CustomDatePicker: UIView {
         selectedDayRow = dateComponents.day! - 1
         selectedYearRow = dateComponents.year! - 1
         
-        if dateFormat == .monthFirst {
-            pickerView.selectRow(selectedMounthRow, inComponent: 0, animated: false)
-            pickerView.selectRow(selectedDayRow, inComponent: 1, animated: false)
-        } else {
-            pickerView.selectRow(selectedDayRow, inComponent: 0, animated: false)
-            pickerView.selectRow(selectedMounthRow, inComponent: 1, animated: false)
-        }
-        
-        pickerView.selectRow(selectedYearRow, inComponent: 2, animated: false)
+        pickerView.selectRow(selectedDayRow, inComponent: dateFormat.dayIndex, animated: false)
+        pickerView.selectRow(selectedMounthRow, inComponent: dateFormat.monthIndex, animated: false)
+        pickerView.selectRow(selectedYearRow, inComponent: dateFormat.yearIndex, animated: false)
     }
     
     func didSelectDate() {
@@ -112,76 +131,57 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        if component == 0 {
-            if dateFormat == .monthFirst {
-                return months.count
-            } else {
-                return months[selectedMounthRow].days.count
-            }
-        } else if component == 1  {
-            if dateFormat == .monthFirst {
-                return months[selectedMounthRow].days.count
-            } else {
-                return months.count
-            }
-        } else {
+        if dateFormat.dayIndex == component {
+            return months[selectedMounthRow].days.count
+            
+        } else if dateFormat.monthIndex == component {
+            return months.count
+            
+        } else if dateFormat.yearIndex == component {
             return years.count
         }
+        return 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        if component == 0 {
-            if dateFormat == .monthFirst {
-                return months[row].name
-            } else {
-                return months[selectedMounthRow].days[row].name
-            }
-        } else if component == 1 {
-            if dateFormat == .monthFirst {
-                return months[selectedMounthRow].days[row].name
-            } else {
-                return months[row].name
-            }
-        } else {
+        if dateFormat.dayIndex == component {
+            return months[selectedMounthRow].days[row].name
+            
+        } else if dateFormat.monthIndex == component {
+            return months[row].name
+            
+        } else if dateFormat.yearIndex == component {
             return years[row].name
         }
+        return nil
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        if component == 0 {
-            if dateFormat == .monthFirst {
-                selectedMounthRow = row
-                pickerView.reloadComponent(1)
-                if months[row].days.first(where: {( $0.number == selectedDayRow )}) == nil {
-                    let index = months[row].days.count - 1
-                    pickerView.selectRow(index, inComponent: 1, animated: false)
-                }
-            } else {
-                selectedDayRow = row
+        if dateFormat.dayIndex == component {
+            selectedDayRow = row
+        }
+        
+        if dateFormat.monthIndex == component {
+            selectedMounthRow = row
+            pickerView.reloadComponent(dateFormat.dayIndex)
+            if months[row].days.first(where: {( $0.number == selectedDayRow + 1 )}) == nil {
+                let index = months[row].days.count - 1
+                pickerView.selectRow(index, inComponent: dateFormat.dayIndex, animated: false)
             }
         }
-        if component == 1 {
-            if dateFormat == .monthFirst {
-                selectedDayRow = row
-            } else {
-                selectedMounthRow = row
-                pickerView.reloadComponent(1)
-                if months[row].days.first(where: {( $0.number == selectedDayRow )}) == nil {
-                    let index = months[row].days.count - 1
-                    pickerView.selectRow(index, inComponent: 1, animated: false)
-                }
-            }
-        }
-        if component == 2 {
+        
+        if dateFormat.yearIndex == component {
             selectedYearRow = row
         }
+
         didSelectDate()
-        if component == 2 {
+        
+        if dateFormat.yearIndex == component {
             months.removeAll()
             for number in 1...12 {
                 months.append(Month(number, selectedDate: selectedDate))
             }
-            pickerView.reloadComponent(1)
+            pickerView.reloadComponent(dateFormat.dayIndex)
         }
     }
     
@@ -197,28 +197,29 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
                            NSAttributedString.Key.font: appearance.pickerTextFont]
         
         if component == 0 {
-            if dateFormat == .monthFirst {
-                title = months[row].name
-                paragraph.alignment = .left
-                myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
-            } else {
-                title = months[selectedMounthRow].days[row].name
-                paragraph.alignment = .center
-                myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
-            }
-        } else if component == 1 {
-            if dateFormat == .monthFirst {
-                title = months[selectedMounthRow].days[row].name
-                paragraph.alignment = .center
-                myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
-            } else {
-                title = months[row].name
-                paragraph.alignment = .left
-                myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
-            }
-        } else {
+            paragraph.alignment = .left
+            myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
+        }
+        
+        if component == 1 {
             paragraph.alignment = .center
             myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
+        }
+        
+        if component == 2 {
+            paragraph.alignment = .right
+            myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
+        }
+        
+        if dateFormat.dayIndex == component {
+            title = months[selectedMounthRow].days[row].name
+            
+        } else if dateFormat.monthIndex == component {
+            title = months[row].name
+            paragraph.alignment = .left
+            myAttribute[NSAttributedString.Key.paragraphStyle] = paragraph
+            
+        } else if dateFormat.yearIndex == component {
             title = years[row].name
         }
         
@@ -227,20 +228,15 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
     }
     
     func pickerView(_ pickerView: UIPickerView, widthForComponent component: Int) -> CGFloat {
-        if component == 0 {
-            if dateFormat == .monthFirst {
-                return 110
-            } else {
-                return 80
-            }
-        } else if component == 1 {
-            if dateFormat == .monthFirst {
-                return 40
-            } else {
-                return 110
-            }
-        } else if component == 2 {
-            return 100
+        if dateFormat.dayIndex == component {
+            return 50
+            
+        } else if dateFormat.monthIndex == component {
+            return 110
+
+        } else if dateFormat.yearIndex == component {
+            return 80
+
         }
         return 0
     }

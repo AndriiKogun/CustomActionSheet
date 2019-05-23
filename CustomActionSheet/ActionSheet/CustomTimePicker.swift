@@ -245,10 +245,24 @@ private struct Time {
     init(number: Int) {
         self.number = number
         
+        let languageIdentifier = Locale.preferredLanguages.first!
+        let locale = Locale(identifier: languageIdentifier)
+        
+        let calendar = Calendar.current
+        var dateComponents = calendar.dateComponents(in: TimeZone.current, from: Date())
+
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = locale
+        dateFormatter.dateFormat = "a"
+        
         if number == 0 {
-            self.name = "AM"
+            dateComponents.hour = 1
+            let date = calendar.date(from: dateComponents)!
+            self.name = dateFormatter.string(from: date)
         } else {
-            self.name = "PM"
+            dateComponents.hour = 13
+            let date = calendar.date(from: dateComponents)!
+            self.name = dateFormatter.string(from: date)
         }
     }
 }

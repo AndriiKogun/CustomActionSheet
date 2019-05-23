@@ -47,7 +47,7 @@ class ViewController: UIViewController {
         let locale = Locale(identifier: languageIdentifier)
         
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "MMMM dd, yyyy h:mm"
+        dateFormatter.dateFormat = "MMMM dd, yyyy HH:mm"
         
         dateFormatter.locale = locale
         return dateFormatter
@@ -86,7 +86,7 @@ class ViewController: UIViewController {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
 
-        let datePicker = ActionSheetDatePickerView(dateFormat: .monthFirst, selectedDate: date) { (selectedDate) in
+        let datePicker = ActionSheetDatePickerView(dateFormat: .yearFirst, selectedDate: date) { (selectedDate) in
             self.date = selectedDate
         }
         
@@ -106,7 +106,7 @@ class ViewController: UIViewController {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
         
-        let timePicker = ActionSheetDatePickerView(timeFormat: .H24, selectedDate: date) { (selectedDate) in
+        let timePicker = ActionSheetDatePickerView(timeFormat: .H12, selectedDate: date) { (selectedDate) in
             self.date = selectedDate
         }
         
