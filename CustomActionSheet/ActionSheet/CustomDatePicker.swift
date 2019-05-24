@@ -115,9 +115,16 @@ class CustomDatePicker: UIView {
         var calendar = Calendar.current
         calendar.timeZone = TimeZone.current
         var dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: selectedDate)
-        dateComponents.year = selectedYearRow + 1
+        let year = selectedYearRow + 1
+
+        dateComponents.year = year
         dateComponents.month = selectedMounthRow + 1
-        dateComponents.day = selectedDayRow + 1
+        if !((year % 4 == 0) && (year % 100 != 0) || (year % 400 == 0)) && selectedDayRow == 28 && selectedMounthRow == 1 {
+            dateComponents.day = selectedDayRow
+        } else {
+            dateComponents.day = selectedDayRow + 1
+        }
+        
         let date = calendar.date(from: dateComponents)!
         selectedDate = date
         delegate?.dateDidSelected(date: date)
@@ -166,6 +173,7 @@ extension CustomDatePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
             pickerView.reloadComponent(dateFormat.dayIndex)
             if months[row].days.first(where: {( $0.number == selectedDayRow + 1 )}) == nil {
                 let index = months[row].days.count - 1
+                selectedDayRow = index
                 pickerView.selectRow(index, inComponent: dateFormat.dayIndex, animated: false)
             }
         }

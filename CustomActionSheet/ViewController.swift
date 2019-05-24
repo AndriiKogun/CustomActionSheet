@@ -86,7 +86,7 @@ class ViewController: UIViewController {
         let actionSheet = ActionSheet()
         actionSheet.appearance = appearance
 
-        let datePicker = ActionSheetDatePickerView(dateFormat: .yearFirst, selectedDate: date) { (selectedDate) in
+        let datePicker = ActionSheetDatePickerView(dateFormat: .dayFirst, selectedDate: date) { (selectedDate) in
             self.date = selectedDate
         }
         
