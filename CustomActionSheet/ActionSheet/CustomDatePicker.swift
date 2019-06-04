@@ -72,7 +72,7 @@ class CustomDatePicker: UIView {
         super.init(frame: CGRect.zero)
         self.selectedDate = selectedDate
         setupLayout()
-        setup()
+        setupData()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -88,27 +88,29 @@ class CustomDatePicker: UIView {
         pickerView.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
     }
     
-    private func setup() {
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone.current
-        var dateComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
-        let currentYear = dateComponents.year!
-        
-        for number in 1...currentYear + 1000 {
+    private func setupData() {
+        for number in 1...3000 {
             years.append(Year(number: number))
         }
         
         for number in 1...12 {
             months.append(Month(number, selectedDate: selectedDate))
         }
+        setDate(selectedDate, animated: false)
+    }
+    
+    private func setDate(_ date: Date, animated: Bool) {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone.current
+        var dateComponents = calendar.dateComponents([.year, .month, .day], from: date)
         
         selectedMounthRow = dateComponents.month! - 1
         selectedDayRow = dateComponents.day! - 1
         selectedYearRow = dateComponents.year! - 1
         
-        pickerView.selectRow(selectedDayRow, inComponent: dateFormat.dayIndex, animated: false)
-        pickerView.selectRow(selectedMounthRow, inComponent: dateFormat.monthIndex, animated: false)
-        pickerView.selectRow(selectedYearRow, inComponent: dateFormat.yearIndex, animated: false)
+        pickerView.selectRow(selectedDayRow, inComponent: dateFormat.dayIndex, animated: animated)
+        pickerView.selectRow(selectedMounthRow, inComponent: dateFormat.monthIndex, animated: animated)
+        pickerView.selectRow(selectedYearRow, inComponent: dateFormat.yearIndex, animated: animated)
     }
     
     func didSelectDate() {
@@ -126,8 +128,14 @@ class CustomDatePicker: UIView {
         }
         
         let date = calendar.date(from: dateComponents)!
-        selectedDate = date
-        delegate?.dateDidSelected(date: date)
+        
+        if date < Date() {
+            selectedDate = Date()
+            setDate(Date(), animated: true)
+        } else {
+            selectedDate = date
+            delegate?.dateDidSelected(date: date)
+        }
     }
 }
 
