@@ -129,12 +129,14 @@ class CustomDatePicker: UIView {
         
         let date = calendar.date(from: dateComponents)!
         
-        if date < Date() {
-            selectedDate = Date()
-            setDate(Date(), animated: true)
-        } else {
+        let currentDate = Date()
+        
+        if date > currentDate {
             selectedDate = date
             delegate?.dateDidSelected(date: date)
+        } else {
+            selectedDate = currentDate
+            setDate(currentDate, animated: true)
         }
     }
 }

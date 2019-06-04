@@ -65,10 +65,6 @@ class CustomTimePicker: UIView {
     }
     
     private func setup() {
-        var calendar = Calendar.current
-        calendar.timeZone = TimeZone.current
-        var dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: selectedDate)
-        
         if timeFormat == .H12 {
             for number in 1...12 {
                 hours.append(Hour(number: number))
@@ -85,6 +81,13 @@ class CustomTimePicker: UIView {
         for number in 0...59 {
             minutes.append(Minute(number: number))
         }
+        setTime(selectedDate, animated: false)
+    }
+    
+    private func setTime(_ date: Date, animated: Bool) {
+        var calendar = Calendar.current
+        calendar.timeZone = TimeZone.current
+        var dateComponents = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: date)
         
         if timeFormat == .H12 {
             if dateComponents.hour == 0, 0...59 ~= dateComponents.minute! {
@@ -100,15 +103,15 @@ class CustomTimePicker: UIView {
         } else {
             selectedHourRow = dateComponents.hour!
         }
-
+        
         selectedMinuteRow = dateComponents.minute!
         
         if timeFormat == .H12 {
-            pickerView.selectRow(selectedTimeFormatRow, inComponent: 2, animated: false)
+            pickerView.selectRow(selectedTimeFormatRow, inComponent: 2, animated: animated)
         }
         
-        pickerView.selectRow(selectedHourRow, inComponent: 0, animated: false)
-        pickerView.selectRow(selectedMinuteRow, inComponent: 1, animated: false)
+        pickerView.selectRow(selectedHourRow, inComponent: 0, animated: animated)
+        pickerView.selectRow(selectedMinuteRow, inComponent: 1, animated: animated)
     }
 }
 
@@ -174,8 +177,16 @@ extension CustomTimePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
         }
         
         let date = calendar.date(from: dateComponents)!
-        selectedDate = date
-        delegate?.dateDidSelected(date: date)
+        
+        let currentDate = Date()
+        
+        if date > currentDate {
+            selectedDate = date
+            delegate?.dateDidSelected(date: date)
+        } else {
+            setTime(currentDate, animated: true)
+            delegate?.dateDidSelected(date: date)
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
