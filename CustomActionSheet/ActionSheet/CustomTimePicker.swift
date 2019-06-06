@@ -177,16 +177,8 @@ extension CustomTimePicker : UIPickerViewDelegate, UIPickerViewDataSource  {
         }
         
         let date = calendar.date(from: dateComponents)!
-        
-        let currentDate = Date()
-        
-        if date > currentDate {
-            selectedDate = date
-            delegate?.dateDidSelected(date: date)
-        } else {
-            setTime(currentDate, animated: true)
-            delegate?.dateDidSelected(date: date)
-        }
+        selectedDate = date
+        delegate?.dateDidSelected(date: date)
     }
     
     func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
